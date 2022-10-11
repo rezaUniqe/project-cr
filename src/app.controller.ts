@@ -6,15 +6,17 @@ export class AppController {
     constructor(private readonly appService: AppService) {
     }
 
-    @Post()
+    @Get()
     async getHello(): Promise<any> {
         try {
+            return await this.appService.loginUser({
+                userName: 'mobinyardim',
+                password: 'CL5eFwpj3N!W!Z3'
+            });
 
         } catch (e) {
-            return await this.appService.loginUser({
-                userName: 'reza',
-                password: 'sdsdsd'
-            });
+            console.log(e)
+          return e
 
         }
     }
