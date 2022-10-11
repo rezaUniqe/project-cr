@@ -65,6 +65,7 @@ export default (
    * @param {String} type Type of server list to get: [desktop, extension, mobile, ikev2, openvpn]
    * @param {Number} premium Pro list or Free list
    * @param {String} revision Revision hash
+   * @param alc
    * @param {Function} successfulReduxAction Optional, A redux action creator on successful request
    * @param {Function} failedReduxAction Optional, A redux action creator on failed request
    * @param {Function} loadingReduxAction Optional, A redux action creator on request start
