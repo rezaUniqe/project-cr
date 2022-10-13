@@ -16,13 +16,13 @@ export const prepLoginForm: PrepLoginForm = ({
   sessionType,
   twoFACode,
 }) => {
-  const { time, client_auth_hash } = getMandatoryParams()
+  const { time, client_auth_hash ,session_auth_hash } = getMandatoryParams()
   const params = {
     username,
     password,
     time,
     client_auth_hash,
-    session_type_id: sessionType,
+    session_type_id: sessionType
   }
   if (twoFACode) {
     // @ts-ignore

@@ -24,6 +24,7 @@ const endpoints = {
   regToken: RegToken,
 }
 
-export function create(conf: Config = {}): Record<string, unknown> {
-  return createInstance({ conf, endpoints })
-}
+export const create = (conf: Config = {}): Record<string, unknown> => createInstance({
+  conf,
+  endpoints
+});

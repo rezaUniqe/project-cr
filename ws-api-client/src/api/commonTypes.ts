@@ -2,8 +2,8 @@ import { PrepLoginForm } from './prepLoginForm'
 import { SetConfig, GetConfig } from './config'
 
 export enum BooleanNumber {
-  FALSE = 0,
-  TRUE = 1,
+  FALSE ,
+  TRUE ,
 }
 
 export enum SessionType {

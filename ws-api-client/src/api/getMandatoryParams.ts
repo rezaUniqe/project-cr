@@ -23,7 +23,7 @@ const getMandatoryParams = (
   const time = Math.round(new Date().getTime() / 1000).toString()
   return {
     client_auth_hash: clientAuthHash(time).toString(),
-    session_auth_hash: sessionAuthHash??'',
+    session_auth_hash: sessionAuthHash,
     time,
   }
 }

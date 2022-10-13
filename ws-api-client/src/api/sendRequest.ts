@@ -1,6 +1,6 @@
 import qs from 'query-string'
-import { RequestArgs, ApiException } from './commonTypes'
-import { getConfig, setConfig } from './config'
+import {ApiException, RequestArgs} from './commonTypes'
+import {getConfig, setConfig} from './config'
 
 interface PrepareValidUrlArgs {
   url: string
@@ -66,6 +66,7 @@ const sendRequest = async ({
 
     const apiUrl = prepareValidUrl({ url: endpoint, assets, useBackup })
     const url = apiUrl + `?${qs.stringify(params)}`
+
     const debugUrl = apiUrl
     // @ts-ignore
     global.url = debugUrl
@@ -88,6 +89,7 @@ const sendRequest = async ({
       const controller = new AbortController()
 
       setTimeout(() => controller.abort(), 3000)
+
       let params: RequestInit = {
         headers: config.headers as HeadersInit,
         method: config.method,
@@ -96,6 +98,7 @@ const sendRequest = async ({
       }
 
       const response = await fetch(url, params)
+      console.log('kos',url)
 
       if (response.status === 404) {
         throw {
@@ -122,8 +125,7 @@ const sendRequest = async ({
 
   /* Make the request */
   try {
-    const resp = await send()
-    return resp
+    return await send()
   } catch (e) {
     console.error((e as any)?.message)
     let resp
