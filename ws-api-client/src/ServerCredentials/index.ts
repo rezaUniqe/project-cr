@@ -26,8 +26,8 @@ export default (
       actionCreators: { failedReduxAction, loadingReduxAction },
     })
     const response = {
-      username: window.atob(data.data.username),
-      password: window.atob(data.data.password),
+      username: Buffer.from(data.data.username, 'base64').toString(),
+      password: Buffer.from(data.data.password, 'base64').toString(),
     }
     if (successfulReduxAction) {
       api.dispatcher({
