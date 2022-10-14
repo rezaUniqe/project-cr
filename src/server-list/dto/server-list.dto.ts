@@ -12,6 +12,7 @@ export class GetServerListRequestParamsDto {
         enum:[0,1]
     })
     premium: BooleanNumber
+    sessionAuthHash?:string
     revision?: string = '4003'
     alc?: Array<string>
 }

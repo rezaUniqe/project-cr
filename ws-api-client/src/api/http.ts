@@ -142,8 +142,6 @@ const request: ApiRequest = async ({
 const get: ApiCall = async ({endpoint, params, actionCreators = {}}) => {
     const {sessionAuthHash} = getConfig()
 
-  console.log('kos5',getConfig())
-
     if (!sessionAuthHash) {
         // @ts-ignore
         throw createSessionErrorAndDispatchAction(actionCreators.failedReduxAction)

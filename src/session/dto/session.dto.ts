@@ -15,6 +15,9 @@ export class LoginBodyDto {
     sessionType: number
     twoFACode?: string
 }
+export class CurrentSessionParams{
+    sessionAuthHash:string
+}
 export class SessionData {
     session_auth_hash: string
     username: string

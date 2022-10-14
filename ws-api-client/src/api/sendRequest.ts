@@ -85,21 +85,15 @@ const sendRequest = async ({
       setConfig({
         lastCallTimeStamps: { ...lastCallTimeStamps, [endpoint]: Date.now() },
       })
-
       const controller = new AbortController()
-
       setTimeout(() => controller.abort(), 3000)
-
       let params: RequestInit = {
         headers: config.headers as HeadersInit,
         method: config.method,
         body: config.body,
         signal: controller.signal,
       }
-
       const response = await fetch(url, params)
-      console.log('kos',url)
-
       if (response.status === 404) {
         throw {
           code: response.status,
@@ -113,7 +107,6 @@ const sendRequest = async ({
       }
       return response
     } catch (e) {
-      console.error(e)
       throw {
         code: 0,
         message: `Error fetching url. ${(e as any)?.message??''}`,

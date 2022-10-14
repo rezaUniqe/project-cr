@@ -7,6 +7,7 @@ import {
     GetServerListRequestParamsDto,
     GetServerListResponseDto
 } from "./dto/server-list.dto";
+import {setConfig} from "../../ws-api-client/src/api";
 
 
 @Injectable()
@@ -27,8 +28,11 @@ export class ServerListService {
         this.apiInstance = create(this.config)
     }
 
-    async getServerList(args: GetServerListRequestParamsDto): Promise<GetServerListResponseDto> {
+    async getServerList({sessionAuthHash,...args}: GetServerListRequestParamsDto): Promise<GetServerListResponseDto> {
         try {
+            setConfig({
+                sessionAuthHash:sessionAuthHash
+            })
             return await this.apiInstance.serverList.get(args)
         } catch (error) {
             throw error

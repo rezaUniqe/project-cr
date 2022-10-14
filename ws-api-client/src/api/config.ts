@@ -18,10 +18,6 @@ export let globalConfig: Config = {
   assetsUrl: process.env.ASSETS_URL,
   backupApiUrl: process.env.BACKUP_API_URL,
   backupAssetsUrl: process.env.BACKUP_ASSETS_URL,
-  sessionAuthHash: undefined,
-  sessionType: undefined,
-  dispatch: undefined,
-  platform: undefined,
   apiCallMinInterval: process.env.API_CALL_MIN_INTERVAL || '1000',
 }
 
@@ -40,5 +36,4 @@ type DebugConfig = () => void
 export const debugConfig: DebugConfig = () => {
   /* eslint-disable no-console */
   console.log('Debug Config')
-  console.log(getConfig())
 }
