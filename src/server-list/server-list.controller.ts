@@ -10,6 +10,7 @@ import {
     GetServerListRequestParamsDto,
     GetServerListResponseDto
 } from "./dto/server-list.dto";
+import {WsApiException} from "../dto/app.dto";
 
 @ApiTags('serverList')
 @Controller('server-list')
@@ -28,7 +29,7 @@ export class ServerListController {
         try {
             return await this.serverListService.getServerList(params);
         } catch (e) {
-            throw e
+            throw new WsApiException({...e})
         }
     }
 }

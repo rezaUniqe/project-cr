@@ -4,12 +4,14 @@ import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import {
     ValidationPipe
 } from "@nestjs/common";
+import {WsHttpExceptionFilter} from "./ws-http-exception.filter";
 
 
 
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    app.useGlobalFilters(new WsHttpExceptionFilter());
     app.useGlobalPipes(new ValidationPipe({
         transform: true,
     }));
@@ -22,7 +24,6 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
-
     await app.listen(process.env.PORT);
 }
 
