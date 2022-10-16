@@ -10,6 +10,8 @@ import RegToken from './RegToken'
 import { Config } from './api/config'
 import dotenv from "dotenv";
 import ServerConfigs from "./ServerConfigs";
+import PortMap from "./PortMap";
+import WgConfig from "./WgConfig";
 dotenv.config();
 
 // @ts-ignore
@@ -23,7 +25,9 @@ const endpoints = {
   users: Users,
   recordInstall: RecordInstall,
   regToken: RegToken,
-  serverConfigs:ServerConfigs
+  serverConfigs:ServerConfigs,
+  portMap:PortMap,
+  WgConfig:WgConfig,
 }
 
 export const create = (conf: Config = {}): Record<string, unknown> => createInstance({

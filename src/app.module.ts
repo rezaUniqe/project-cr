@@ -6,10 +6,12 @@ import { UserModule } from './user/user.module';
 import { ServerCredentialsModule } from './server-credentials/server-credentials.module';
 import { ServerConfigsModule } from './server-configs/server-configs.module';
 import { RecordInstallModule } from './record-install/record-install.module';
+import { PortMapModule } from './port-map/port-map.module';
+import { WgConfigModule } from './wg-config/wg-config.module';
 
 
 @Module({
-    imports: [ConfigModule.forRoot({isGlobal: true}), ServerListModule, SessionModule, UserModule, ServerCredentialsModule, ServerConfigsModule, RecordInstallModule],
+    imports: [ConfigModule.forRoot({isGlobal: true}), ServerListModule, SessionModule, UserModule, ServerCredentialsModule, ServerConfigsModule, RecordInstallModule, PortMapModule, WgConfigModule],
     controllers: [],
     providers: [],
 })
