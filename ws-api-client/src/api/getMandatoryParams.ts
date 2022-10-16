@@ -2,15 +2,15 @@
 import md5 from 'md5'
 
 type ClientAuthHash = (
-  ts?: string | number,
-  secret?: string,
+    ts?: string | number,
+    secret?: string,
 ) => string | number[]
 
 const clientAuthHash: ClientAuthHash = (
-  ts,
-  secret = (typeof window === 'object'
-    ? (window as any).CLIENT_AUTH_SECRET
-    : (global as any).CLIENT_AUTH_SECRET) ||
+    ts,
+    secret = (typeof window === 'object'
+        ? (window as any).CLIENT_AUTH_SECRET
+        : (global as any).CLIENT_AUTH_SECRET) ||
     process.env.REACT_APP_CLIENT_AUTH_SECRET ||
     process.env.WEB_EXT_CLIENT_AUTH_SECRET ||
     process.env.CLIENT_AUTH_SECRET ||
@@ -18,14 +18,14 @@ const clientAuthHash: ClientAuthHash = (
 ) => md5(`${secret}${ts}`)
 
 const getMandatoryParams = (
-  sessionAuthHash?: string,
+    sessionAuthHash?: string,
 ): Record<string, string> => {
-  const time = Math.round(new Date().getTime() / 1000).toString()
-  return {
-    client_auth_hash: clientAuthHash(time).toString(),
-    session_auth_hash: sessionAuthHash,
-    time,
-  }
+    const time = Math.round(new Date().getTime() / 1000).toString()
+    return {
+        client_auth_hash: clientAuthHash(time).toString(),
+        time,
+        session_auth_hash: sessionAuthHash,
+    }
 }
 
 export default getMandatoryParams

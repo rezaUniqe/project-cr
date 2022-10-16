@@ -57,6 +57,7 @@ interface Options {
 export interface ApiArgs {
   endpoint: string
   params: Record<string, unknown>
+  headers?:any
   actionCreators: ActionCreators
 }
 export interface DispatcherArgs {
@@ -100,4 +101,9 @@ export interface ApiResponse<T = Record<string, unknown>> {
   data: T
   info?: Info
   metadata: MetaData
+}
+
+
+export interface Interface {
+  
 }

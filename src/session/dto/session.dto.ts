@@ -2,17 +2,12 @@ import {
     BooleanNumber,
     SessionType
 } from "../../../ws-api-client/src/api/commonTypes";
-import {ApiProperty} from "@nestjs/swagger";
 
 
 export class LoginBodyDto {
     username: string
     password: string
-    @ApiProperty({
-        enum:SessionType,
-        example: 0
-    })
-    sessionType: number
+    sessionType: SessionType
     twoFACode?: string
 }
 export class CurrentSessionParams{

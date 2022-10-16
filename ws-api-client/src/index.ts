@@ -9,6 +9,7 @@ import RecordInstall from './RecordInstall/index'
 import RegToken from './RegToken'
 import { Config } from './api/config'
 import dotenv from "dotenv";
+import ServerConfigs from "./ServerConfigs";
 dotenv.config();
 
 // @ts-ignore
@@ -22,6 +23,7 @@ const endpoints = {
   users: Users,
   recordInstall: RecordInstall,
   regToken: RegToken,
+  serverConfigs:ServerConfigs
 }
 
 export const create = (conf: Config = {}): Record<string, unknown> => createInstance({

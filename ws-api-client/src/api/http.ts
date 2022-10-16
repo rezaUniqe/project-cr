@@ -4,6 +4,7 @@ import getMandatoryParams from './getMandatoryParams'
 import {getConfig} from './config'
 import dispatcher from './dispatcher'
 import sendRequest from './sendRequest'
+import {AxiosResponse} from "axios";
 
 const createSessionErrorAndDispatchAction = (actionCreator: ActionCreator) => {
     const err = {
@@ -18,13 +19,11 @@ const createSessionErrorAndDispatchAction = (actionCreator: ActionCreator) => {
 
 //#region Parse response
 interface ParseResponseArgs {
-    response: Response
+    response: AxiosResponse
     debug?: Record<string, unknown>
 }
 
 const parseResponse = async ({response, debug}: ParseResponseArgs) => {
-    let resData
-    // handle different response types
     if (response.status >= 500) {
         throw {
             code: response.status,
@@ -32,57 +31,10 @@ const parseResponse = async ({response, debug}: ParseResponseArgs) => {
             debug,
             data: debug,
         } as ApiException
-    } else if (
-        response.headers.get('content-type') === 'application/x-ns-proxy-autoconfig'
-    ) {
-        resData = await response.text()
-        // handle plain text response errors
-        if (resData.length === 0) {
-            // empty response from API
-            throw {
-                code: 500,
-                message: 'Empty response from API',
-                debug,
-                data: debug,
-            } as ApiException
-        }
-    } else {
-        resData = await response
-            .json()
-            .then(data => data)
-            .catch(() => ({
-                errorCode: 707,
-                errorMessage:
-                    'Suspicious activity detected from your network. Please try again soon',
-                errorDescription: 'Suspicious activity detected from your network',
-                logStatus: null,
-            }))
-        // handle json response errors
-        if (Object.keys(resData).length === 0) {
-            let errCode = 0
-            if (response.status > 0) {
-                errCode = response.status
-            }
-            // empty response from API
-            throw {
-                code: errCode,
-                message: 'Empty response from API',
-                debug,
-                data: debug,
-            } as ApiException
-        } else if (resData.errorCode || !resData.data) {
-            // error in API response
-            const errorCode = resData.errorCode || 'No error code present'
-            const errorMsg = resData.errorMessage || 'No error message present'
-            throw {
-                code: errorCode,
-                message: errorMsg,
-                debug,
-                data: JSON.stringify(resData),
-            } as ApiException
-        }
     }
-    return resData
+    else {
+       return await response.data
+    }
 }
 //#endregion
 
@@ -122,6 +74,7 @@ const request: ApiRequest = async ({
                 url: global.url,
             },
         })
+
         if (successfulReduxAction) {
             dispatcher({actionCreator: successfulReduxAction, data})
         }
@@ -139,9 +92,13 @@ const request: ApiRequest = async ({
 
 //#region Http verb calls
 
-const get: ApiCall = async ({endpoint, params, actionCreators = {}}) => {
+const get: ApiCall = async ({
+                                endpoint,
+                                headers,
+                                params,
+                                actionCreators = {}
+                            }) => {
     const {sessionAuthHash} = getConfig()
-
     if (!sessionAuthHash) {
         // @ts-ignore
         throw createSessionErrorAndDispatchAction(actionCreators.failedReduxAction)
@@ -149,7 +106,10 @@ const get: ApiCall = async ({endpoint, params, actionCreators = {}}) => {
     const data = await request({
         method: 'get',
         endpoint,
-        opts: {params: {...params, ...getMandatoryParams(sessionAuthHash)}},
+        opts: {
+            headers: headers,
+            params: {...params, ...getMandatoryParams(sessionAuthHash)}
+        },
         actionCreators,
     })
     return data
@@ -171,6 +131,7 @@ const post: ApiCall = async ({
     const opts = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'user-agent': 'okhttp/4.9.3',
         },
         body,
     }

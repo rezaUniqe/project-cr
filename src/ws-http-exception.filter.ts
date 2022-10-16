@@ -6,8 +6,6 @@ import {WsApiException} from "./dto/app.dto";
 export class WsHttpExceptionFilter implements ExceptionFilter {
     catch(exception: WsApiException, host: ArgumentsHost) {
 
-        console.log('edsds',exception)
-
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();

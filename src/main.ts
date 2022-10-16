@@ -5,6 +5,10 @@ import {
     ValidationPipe
 } from "@nestjs/common";
 import {WsHttpExceptionFilter} from "./ws-http-exception.filter";
+import {
+    createProxyMiddleware
+} from "http-proxy-middleware";
+
 
 
 
@@ -24,6 +28,7 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
+
     await app.listen(process.env.PORT);
 }
 
