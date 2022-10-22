@@ -1,5 +1,7 @@
 import {BooleanNumber, Info} from "../../../ws-api-client/src/api/commonTypes";
 import {
+    Group,
+    MobileRes, MyNode,
     ServerInfo,
     ServerListType,
     ServerStatus
@@ -8,13 +10,37 @@ import {ApiExtraModels, ApiProperty, getSchemaPath} from "@nestjs/swagger";
 
 export class GetServerListRequestParamsDto {
     type: ServerListType
-    @ApiProperty({
-        enum:[0,1]
-    })
     premium: BooleanNumber
-    sessionAuthHash?:string
+    sessionAuthHash?: string
     revision?: string = '4003'
     alc?: Array<string>
+}
+
+class ServerListNode implements MyNode{
+    group: string;
+    hostname: string;
+    ip: string;
+    ip2: string;
+    ip3: string;
+    weight: number;
+
+}
+
+@ApiExtraModels(ServerListNode)
+class ServerListGroupContent implements Group {
+    city: string;
+    gps: string;
+    health: number;
+    id: number;
+    link_speed: string;
+    nick: string;
+    nodes: Array<ServerListNode>;
+    ovpn_x509: string;
+    ping_ip: string;
+    pro: number;
+    tz: string;
+    wg_endpoint: string;
+    wg_pubkey: string;
 }
 
 
@@ -39,8 +65,23 @@ class ExtensionInfo implements ServerInfo {
             ]
         }
     }
+}
 
-
+@ApiExtraModels(ServerListGroupContent)
+class MobileInfo implements MobileRes {
+    country_code: string;
+    dns_hostname: string;
+    force_expand: number;
+    groups: Array<ServerListGroupContent>;
+    id: number;
+    loc_type: string;
+    name: string;
+    p2p: number;
+    premium_only: number;
+    short_name: string;
+    status: number;
+    tz: string;
+    tz_offset: string;
 }
 
 class DesktopInfo implements ServerInfo {
@@ -72,12 +113,12 @@ class SeverListMetaInfo {
 
 }
 
-@ApiExtraModels(ExtensionInfo, DesktopInfo, SeverListCommonInfo, SeverListMetaInfo)
+@ApiExtraModels(ExtensionInfo, DesktopInfo, MobileInfo, SeverListCommonInfo, SeverListMetaInfo)
 export class GetServerListResponseDto {
     @ApiProperty({
-        oneOf: [{$ref: getSchemaPath(ExtensionInfo)}, {$ref: getSchemaPath(DesktopInfo)},]
+        oneOf: [{$ref: getSchemaPath(ExtensionInfo)}, {$ref: getSchemaPath(DesktopInfo)}, {$ref: getSchemaPath(MobileInfo)}]
     })
-    data: ExtensionInfo | DesktopInfo
+    data: ExtensionInfo | DesktopInfo | MobileInfo
     info?: SeverListCommonInfo
     metadata: SeverListMetaInfo
 }

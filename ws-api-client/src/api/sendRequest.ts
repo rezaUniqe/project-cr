@@ -114,9 +114,9 @@ const sendRequest = async ({
                 headers: config.headers as any,
                 method: config.method,
                 proxy: {
-                    host: '127.0.0.1',
-                    protocol: 'https',
-                    port: 8080
+                    host: '192.168.100.100',
+                    protocol: 'http',
+                    port: 3030
                 }
             })
 
@@ -152,7 +152,6 @@ const sendRequest = async ({
             await new Promise(resolve => setTimeout(resolve, (e as any)?.data.timeToNextCall))
             resp = await send()
         } else {
-            // TODO: Figure out when to retry
             resp = await send(true)
         }
         return resp

@@ -1,4 +1,4 @@
-import {Controller, Get, Param, Query, Req} from '@nestjs/common';
+import {Controller, Get, Query} from '@nestjs/common';
 import {ServerListService} from "./server-list.service";
 import {
     ApiForbiddenResponse,

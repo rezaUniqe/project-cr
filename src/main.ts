@@ -5,9 +5,7 @@ import {
     ValidationPipe
 } from "@nestjs/common";
 import {WsHttpExceptionFilter} from "./ws-http-exception.filter";
-import {
-    createProxyMiddleware
-} from "http-proxy-middleware";
+import * as fs from "fs";
 
 
 
@@ -24,11 +22,13 @@ async function bootstrap() {
         .setTitle('project-cr')
         .setDescription('The project-cr API description')
         .setVersion('1.0')
+        .addServer('http://192.168.100.180:7474')
         .addServer('http://localhost:7474')
         .build();
     const document = SwaggerModule.createDocument(app, config);
+    fs.writeFileSync("./swagger-spec.json", JSON.stringify(document));
+    SwaggerModule.setup("/api", app, document);
     SwaggerModule.setup('api', app, document);
-
     await app.listen(process.env.PORT);
 }
 
