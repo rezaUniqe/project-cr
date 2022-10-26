@@ -22,7 +22,7 @@ async function bootstrap() {
         .setTitle('project-cr')
         .setDescription('The project-cr API description')
         .setVersion('1.0')
-        .addServer('http://192.168.100.180:7474')
+        .addServer('http://192.168.100.137:7474')
         .addServer('http://localhost:7474')
         .build();
     const document = SwaggerModule.createDocument(app, config);

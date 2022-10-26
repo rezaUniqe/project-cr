@@ -112,12 +112,7 @@ const sendRequest = async ({
                 data:config.body,
                 params: {...params},
                 headers: config.headers as any,
-                method: config.method,
-                proxy: {
-                    host: '192.168.100.100',
-                    protocol: 'http',
-                    port: 3030
-                }
+                method: config.method
             })
 
             if (response.status === 404) {
