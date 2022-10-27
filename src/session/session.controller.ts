@@ -1,7 +1,6 @@
 import {Body, Controller, Get, Post, Query} from '@nestjs/common';
 import {
     ApiForbiddenResponse,
-    ApiNotFoundResponse,
     ApiOkResponse,
     ApiTags
 } from "@nestjs/swagger";
@@ -12,7 +11,6 @@ import {
     LoginBodyDto,
     SessionData
 } from "./dto/session.dto";
-import {setConfig} from "../../ws-api-client/src/api";
 import {WsApiException} from "../dto/app.dto";
 
 
