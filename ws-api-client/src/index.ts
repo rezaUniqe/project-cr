@@ -12,6 +12,7 @@ import dotenv from "dotenv";
 import ServerConfigs from "./ServerConfigs";
 import PortMap from "./PortMap";
 import WgConfig from "./WgConfig";
+import WgConfigInit from "./WgConfigInit";
 dotenv.config();
 
 // @ts-ignore
@@ -28,6 +29,7 @@ const endpoints = {
   serverConfigs:ServerConfigs,
   portMap:PortMap,
   WgConfig:WgConfig,
+  WgConfigInit:WgConfigInit,
 }
 
 export const create = (conf: Config = {}): Record<string, unknown> => createInstance({

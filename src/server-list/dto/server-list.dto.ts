@@ -10,7 +10,7 @@ import {ApiExtraModels, ApiProperty, getSchemaPath} from "@nestjs/swagger";
 
 export class GetServerListRequestParamsDto {
     type: ServerListType
-    premium: 0|1
+    premium: BooleanNumber
     sessionAuthHash?: string
     revision?: string = '4003'
     alc?: Array<string>
